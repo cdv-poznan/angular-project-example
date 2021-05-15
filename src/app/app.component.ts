@@ -9,4 +9,8 @@ export class AppComponent implements OnInit {
   public title = 'Angular Project Example';
 
   public ngOnInit() {}
+
+  public onClick($event: MouseEvent): void {
+    console.log($event);
+  }
 }

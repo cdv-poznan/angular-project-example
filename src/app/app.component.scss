@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+section {
+  padding: 50px;
+
+  > div {
+    padding: 10px;
+  }
+}
