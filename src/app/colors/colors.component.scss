@@ -6,3 +6,17 @@
 table {
   width: 100%;
 }
+
+.container {
+  height: 500px;
+  overflow: auto;
+}
+
+.filter {
+  padding: 20px 20px 0;
+  border-bottom: 1px solid #ddd;
+
+  mat-form-field {
+    width: 100%;
+  }
+}

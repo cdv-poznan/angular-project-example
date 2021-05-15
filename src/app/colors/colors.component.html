@@ -1,6 +1,16 @@
 <h1>Colors</h1>
 
 <div class="container mat-elevation-z8">
+  <div class="filter">
+    <mat-form-field  appearance="outline">
+      <mat-label>Filter</mat-label>
+      <input #input matInput (keyup)="applyFilter($event.target.value)" />
+      <button mat-icon-button matSuffix (click)="applyFilter(''); input.value = ''">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
   <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="id">
@@ -24,7 +34,7 @@
       </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
   </table>
 </div>

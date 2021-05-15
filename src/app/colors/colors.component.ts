@@ -38,6 +38,7 @@ export class ColorsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.getColors(1).subscribe(colors => {
       this.dataSource.data = colors;
+      console.log(colors)
 
       this.getColors(2).subscribe(data => {
         this.dataSource.data = [...this.dataSource.data, ...data];
@@ -50,8 +51,12 @@ export class ColorsComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.matSort;
   }
 
+  public applyFilter(filter: string) {
+    this.dataSource.filter = filter.trim().toLowerCase();
+  }
+
   private getColors(page: number): Observable<Color[]> {
-    const url = `https://reqres.in/api/colors?delay=3?page=${page}`;
+    const url = `https://reqres.in/api/colors?page=${page}&delay=3`;
     return this.httpClient.get<ColorsResponse>(url).pipe(map(response => response.data));
   }
 }
