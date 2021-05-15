@@ -43,14 +43,29 @@
           matTooltip="Click to expand"
           color="primary"
         >
-          <mat-icon>account_circle</mat-icon>
+          <ng-container *ngIf="user$ | async as user; else icon">
+            <img class="user" [src]="user.photoURL" />
+          </ng-container>
+          <ng-template #icon>
+            <mat-icon>account_circle</mat-icon>
+          </ng-template>
         </button>
 
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>
-            <mat-icon>verified_user</mat-icon>
-            <span>Log in</span>
-          </button>
+          <ng-container *ngIf="user$ | async; else login">
+            <button mat-menu-item (click)="signOut()">
+              <mat-icon>logout</mat-icon>
+              <span>Sign out</span>
+            </button>
+          </ng-container>
+
+          <ng-template #login>
+            <button mat-menu-item (click)="signIn()">
+              <mat-icon>verified_user</mat-icon>
+              <span>Sign in</span>
+            </button>
+          </ng-template>
+
           <button mat-menu-item routerLink="/settings">
             <mat-icon>settings</mat-icon>
             <span>Settings</span>
@@ -59,10 +74,18 @@
       </ng-container>
 
       <ng-template #large>
-        <button mat-button color="primary">
-          <mat-icon>verified_user</mat-icon>
-          <span>Log in</span>
-        </button>
+        <ng-container *ngIf="user$ | async as user; else login">
+          <button mat-button color="primary" (click)="signOut()">
+            <span>Log out user {{ user.displayName }}</span>
+            <mat-icon>logout</mat-icon>
+          </button>
+        </ng-container>
+        <ng-template #login>
+          <button mat-button color="primary" (click)="signIn()">
+            <mat-icon>verified_user</mat-icon>
+            <span>Sign in</span>
+          </button>
+        </ng-template>
 
         <button mat-button color="primary" routerLink="/settings">
           <mat-icon>settings</mat-icon>

@@ -1,5 +1,7 @@
 import {BreakpointObserver, Breakpoints, MediaMatcher} from '@angular/cdk/layout';
 import {Component, OnInit} from '@angular/core';
+import {AngularFireAuth} from '@angular/fire/auth';
+import firebase from 'firebase/app';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
@@ -11,8 +13,13 @@ import {map} from 'rxjs/operators';
 export class AppComponent implements OnInit {
   public title = 'Angular Project Example';
   public smallScreen$: Observable<boolean>;
+  public user$: Observable<firebase.User>;
 
-  constructor(private beakpointObserver: BreakpointObserver, private mediaMatcher: MediaMatcher) {}
+  constructor(
+    private beakpointObserver: BreakpointObserver,
+    private mediaMatcher: MediaMatcher,
+    private angularFireAuth: AngularFireAuth,
+  ) {}
 
   public ngOnInit() {
     const breakpoints = [Breakpoints.XSmall, Breakpoints.Small];
@@ -24,9 +31,16 @@ export class AppComponent implements OnInit {
     if (media.matches) {
       document.body.classList.add('dark-theme');
     }
+
+    this.user$ = this.angularFireAuth.user;
   }
 
-  public onClick($event: MouseEvent): void {
-    console.log($event);
+  public signIn(): void {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    this.angularFireAuth.signInWithPopup(provider);
+  }
+
+  public signOut(): void {
+    this.angularFireAuth.signOut();
   }
 }

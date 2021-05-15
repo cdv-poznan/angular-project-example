@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "angular-project-2021": {
+      "hosting": {
+        "angular-project-example": [
+          "angular-project-2021"
+        ]
+      }
+    }
+  }
+}

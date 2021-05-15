@@ -2,6 +2,7 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
 import {LayoutModule} from '@angular/cdk/layout';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import {NgModule} from '@angular/core';
+import {AngularFireModule} from '@angular/fire';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
@@ -13,6 +14,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {environment} from 'src/environments/environment';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {ContactComponent} from './contact/contact.component';
@@ -37,6 +39,7 @@ import {SettingsComponent} from './settings/settings.component';
     MatInputModule,
     MatSnackBarModule,
     TextFieldModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [],
   bootstrap: [AppComponent],
