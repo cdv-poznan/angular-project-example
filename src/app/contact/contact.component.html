@@ -1,1 +1,26 @@
 <h1>Contact</h1>
+
+<mat-form-field appearance="outline" color="accent">
+  <mat-label>Message</mat-label>
+  <textarea
+    #textarea
+    matInput
+    cdkTextareaAutosize="true"
+    cdkAutosizeMaxRows="16"
+  ></textarea>
+
+  <button
+    mat-icon-button
+    matSuffix
+    color="accent"
+    [cdkCopyToClipboard]="textarea.value"
+    (cdkCopyToClipboardCopied)="onCopiedToClipboard($event)"
+  >
+    <mat-icon>content_copy</mat-icon>
+  </button>
+</mat-form-field>
+
+<button mat-raised-button color="accent">
+  <span>Send message</span>
+  <mat-icon>send</mat-icon>
+</button>

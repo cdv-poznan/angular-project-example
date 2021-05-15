@@ -1,9 +1,14 @@
+import {ClipboardModule} from '@angular/cdk/clipboard';
 import {LayoutModule} from '@angular/cdk/layout';
+import {TextFieldModule} from '@angular/cdk/text-field';
 import {NgModule} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {BrowserModule} from '@angular/platform-browser';
@@ -27,6 +32,11 @@ import {SettingsComponent} from './settings/settings.component';
     MatMenuModule,
     LayoutModule,
     MatSlideToggleModule,
+    ClipboardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSnackBarModule,
+    TextFieldModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
