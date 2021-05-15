@@ -2,6 +2,12 @@
   display: block;
 }
 
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 section {
   padding: 50px;
 
