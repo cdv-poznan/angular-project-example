@@ -38,7 +38,6 @@ export class ColorsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.getColors(1).subscribe(colors => {
       this.dataSource.data = colors;
-      console.log(colors)
 
       this.getColors(2).subscribe(data => {
         this.dataSource.data = [...this.dataSource.data, ...data];
