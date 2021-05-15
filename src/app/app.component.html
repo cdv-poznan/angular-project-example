@@ -26,6 +26,14 @@
       >
         <mat-icon>color_lens</mat-icon>Colors
       </button>
+      <button
+        mat-button
+        color="primary"
+        routerLink="/files"
+        matTooltip="Navigate to Colors Table"
+      >
+        <mat-icon>cloud</mat-icon>Files
+      </button>
     </div>
     <div class="right">
       <ng-container *ngIf="smallScreen$ | async; else large">

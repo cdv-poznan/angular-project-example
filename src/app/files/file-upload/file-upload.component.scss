@@ -1,0 +1,31 @@
+:host {
+  display: block;
+}
+
+.upload {
+  width: 100%;
+  height: 150px;
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  user-select: none;
+
+  input {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    top: 0;
+  }
+
+  &:hover {
+    box-shadow: inset 0 0 3px 0;
+  }
+}
+
+.text {
+  padding-top: 65px;
+  text-align: center;
+}

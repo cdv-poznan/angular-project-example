@@ -18,6 +18,7 @@ const routes: Routes = [
     path: 'settings',
     component: SettingsComponent,
   },
+  { path: 'files', loadChildren: () => import('./files/files.module').then(m => m.FilesModule) },
 ];
 
 @NgModule({

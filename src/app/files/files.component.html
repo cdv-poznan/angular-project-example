@@ -1,0 +1,22 @@
+<h1>Files</h1>
+
+<app-file-upload (filesSelected)="onFilesChanged($event)"></app-file-upload>
+
+<mat-selection-list>
+  <mat-list-option *ngFor="let file of files" checkboxPosition="before">
+    {{ file.name }} ({{ file.size }}) [{{ file.type }}]
+
+    <mat-icon mat-list-icon>image</mat-icon>
+  </mat-list-option>
+</mat-selection-list>
+
+<button
+  style="margin-top: 20px"
+  mat-raised-button
+  *ngIf="files?.length"
+  (click)="uploadSelected()"
+  color="accent"
+>
+  <mat-icon>cloud_upload</mat-icon>
+  Upload selected
+</button>
