@@ -21,6 +21,7 @@ const routes: Routes = [
     canActivate: [AngularFireAuthGuard],
   },
   {path: 'files', loadChildren: () => import('./files/files.module').then(m => m.FilesModule), canActivate: [AngularFireAuthGuard]},
+  { path: 'todo', loadChildren: () => import('./todo/todo.module').then(m => m.TodoModule) },
 ];
 
 @NgModule({

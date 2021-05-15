@@ -3,6 +3,7 @@ import {LayoutModule} from '@angular/cdk/layout';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import {NgModule} from '@angular/core';
 import {AngularFireModule} from '@angular/fire';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
@@ -40,6 +41,7 @@ import {SettingsComponent} from './settings/settings.component';
     MatSnackBarModule,
     TextFieldModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
