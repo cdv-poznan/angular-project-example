@@ -17,6 +17,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TranslateModule} from '@ngx-translate/core';
 import {environment} from 'src/environments/environment';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -46,6 +47,7 @@ import {SettingsComponent} from './settings/settings.component';
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAnalyticsModule,
+    TranslateModule.forRoot(),
   ],
   providers: [
     {provide: BUCKET, useValue: environment.firebase.storageBucket},

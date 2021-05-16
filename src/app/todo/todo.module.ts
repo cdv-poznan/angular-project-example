@@ -8,6 +8,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatListModule} from '@angular/material/list';
+import {TranslateModule} from '@ngx-translate/core';
 import {EditTodoComponent} from './edit-todo/edit-todo.component';
 import {TodoRoutingModule} from './todo-routing.module';
 import {TodoComponent} from './todo.component';
@@ -25,6 +26,7 @@ import {TodoComponent} from './todo.component';
     MatDialogModule,
     FormsModule,
     MatBadgeModule,
+    TranslateModule.forChild(),
   ],
 })
 export class TodoModule {}

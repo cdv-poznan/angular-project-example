@@ -3,6 +3,7 @@ import {AngularFireAnalytics} from '@angular/fire/analytics';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {MatSelectionListChange} from '@angular/material/list';
+import {TranslateService} from '@ngx-translate/core';
 import {Observable} from 'rxjs';
 import {UploadFile} from './upload-file';
 

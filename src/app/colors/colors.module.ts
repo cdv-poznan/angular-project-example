@@ -8,6 +8,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
+import {TranslateModule} from '@ngx-translate/core';
 import {ColorsRoutingModule} from './colors-routing.module';
 import {ColorsComponent} from './colors.component';
 
@@ -24,6 +25,7 @@ import {ColorsComponent} from './colors.component';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    TranslateModule.forChild(),
   ],
 })
 export class ColorsModule {}
