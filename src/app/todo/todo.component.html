@@ -18,11 +18,21 @@
 <mat-list>
   <mat-divider></mat-divider>
 
-  <ng-container *ngFor="let todo of todos$ | async">
+  <ng-container *ngFor="let todo of todos$ | async; trackBy: trackTodo">
     <mat-list-item>
       <div class="item">
         <div class="left">
-          <span [class.done]="todo.done">{{ todo.task }}</span>
+          <div
+            class="task"
+            [class.done]="todo.done"
+            [matBadge]="todo.likes"
+            matBadgeColor="accent"
+            matBadgeSize="small"
+            matBadgeOverlap="false"
+          >
+            <span
+              >{{ todo.task }}</span>
+          </div>
         </div>
         <div class="right">
           <button
@@ -31,6 +41,9 @@
             [disabled]="todo.done"
           >
             <mat-icon>done</mat-icon>
+          </button>
+          <button mat-icon-button (click)="likeTodo(todo.id, todo.likes)">
+            <mat-icon>thumb_up</mat-icon>
           </button>
           <button
             mat-icon-button

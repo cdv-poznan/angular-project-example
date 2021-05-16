@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, CollectionReference} from '@angular/fire/firestore';
+import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
-import firebase from 'firebase/app';
 import {Observable} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 import {EditTodoComponent} from './edit-todo/edit-todo.component';
@@ -28,6 +27,8 @@ export class TodoComponent implements OnInit {
       map(email => this.firestore.collection<Todo>(TODOS, ref => ref.where('user', '==', email))),
       switchMap(collection => collection.valueChanges({idField: 'id'})),
     );
+
+    this.todos$.subscribe(console.log);
   }
 
   public addTodo(task: string): void {
@@ -38,6 +39,12 @@ export class TodoComponent implements OnInit {
         done: false,
         created: Date.now(),
       });
+    });
+  }
+
+  public likeTodo(id: string, likes: number = 0): void {
+    this.getDoc(id).update({
+      likes: likes + 1,
     });
   }
 
@@ -64,6 +71,10 @@ export class TodoComponent implements OnInit {
 
   public deleteTask(id: string): void {
     this.getDoc(id).delete();
+  }
+
+  public trackTodo(index: number, todo: Todo): string {
+    return `${index}`;
   }
 
   private getDoc(id: string): AngularFirestoreDocument<Todo> {

@@ -4,4 +4,5 @@ export interface Todo {
   done: boolean;
   created: number;
   user: string;
+  likes?: number;
 }

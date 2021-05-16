@@ -1,6 +1,7 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
+import {MatBadgeModule} from '@angular/material/badge';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -23,6 +24,7 @@ import {TodoComponent} from './todo.component';
     MatInputModule,
     MatDialogModule,
     FormsModule,
+    MatBadgeModule,
   ],
 })
 export class TodoModule {}
