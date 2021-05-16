@@ -1,9 +1,10 @@
 import {BreakpointObserver, Breakpoints, MediaMatcher} from '@angular/cdk/layout';
 import {Component, OnInit} from '@angular/core';
+import {AngularFireAnalytics, UserTrackingService} from '@angular/fire/analytics';
 import {AngularFireAuth} from '@angular/fire/auth';
 import firebase from 'firebase/app';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit {
     private beakpointObserver: BreakpointObserver,
     private mediaMatcher: MediaMatcher,
     private angularFireAuth: AngularFireAuth,
+    private analytics: AngularFireAnalytics,
   ) {}
 
   public ngOnInit() {
@@ -33,6 +35,10 @@ export class AppComponent implements OnInit {
     }
 
     this.user$ = this.angularFireAuth.user;
+
+    this.user$.pipe(filter(user => !!user)).subscribe(user => {
+      this.analytics.setUserId(user.uid);
+    });
   }
 
   public signIn(): void {

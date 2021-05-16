@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {AngularFireAnalytics} from '@angular/fire/analytics';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {MatSelectionListChange} from '@angular/material/list';
@@ -14,15 +15,20 @@ const UPLOADS_DIR = 'app_uploads';
 })
 export class FilesComponent implements OnInit {
   public files: UploadFile[] = [];
-  public images$: Observable<any[]>
+  public images$: Observable<any[]>;
 
-  constructor(private angularFireStorage: AngularFireStorage, private angularFirestore: AngularFirestore) {}
+  constructor(
+    private angularFireStorage: AngularFireStorage,
+    private angularFirestore: AngularFirestore,
+    private analytics: AngularFireAnalytics,
+  ) {}
 
   ngOnInit(): void {
     this.images$ = this.angularFirestore.collection('files').valueChanges();
   }
 
   public onFilesChanged(files: File[]): void {
+    this.analytics.logEvent('files_selected');
     this.files = files.map(file => ({
       file,
       progress: 0,
@@ -39,6 +45,7 @@ export class FilesComponent implements OnInit {
   }
 
   public uploadSelected(): void {
+    this.analytics.logEvent('files_upload_started');
     this.files
       .filter(file => file.selected && !file.done)
       .forEach(file => {

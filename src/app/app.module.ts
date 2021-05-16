@@ -3,6 +3,7 @@ import {LayoutModule} from '@angular/cdk/layout';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import {NgModule} from '@angular/core';
 import {AngularFireModule} from '@angular/fire';
+import {AngularFireAnalyticsModule, CONFIG, ScreenTrackingService, UserTrackingService} from '@angular/fire/analytics';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireStorageModule, BUCKET} from '@angular/fire/storage';
 import {MatButtonModule} from '@angular/material/button';
@@ -44,8 +45,21 @@ import {SettingsComponent} from './settings/settings.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireStorageModule,
+    AngularFireAnalyticsModule,
   ],
-  providers: [{provide: BUCKET, useValue: environment.firebase.storageBucket}],
+  providers: [
+    {provide: BUCKET, useValue: environment.firebase.storageBucket},
+    ScreenTrackingService,
+    UserTrackingService,
+    {
+      provide: CONFIG,
+      useValue: {
+        send_page_view: true,
+        anonymize_ip: true,
+        allow_ad_personalization_signals: false,
+      },
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
