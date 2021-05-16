@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AngularFireStorage} from '@angular/fire/storage';
+import {MatSelectionListChange} from '@angular/material/list';
+import {UploadFile} from './upload-file';
 
 const UPLOADS_DIR = 'app_uploads';
 
@@ -9,24 +11,50 @@ const UPLOADS_DIR = 'app_uploads';
   styleUrls: ['./files.component.scss'],
 })
 export class FilesComponent implements OnInit {
-  public files: File[] = [];
+  public files: UploadFile[] = [];
 
   constructor(private angularFireStorage: AngularFireStorage) {}
 
-  ngOnInit(): void {
-    console.log(this.angularFireStorage);
-  }
+  ngOnInit(): void {}
 
   public onFilesChanged(files: File[]): void {
-    this.files = files;
+    this.files = files.map(file => ({
+      file,
+      progress: 0,
+      uploading: false,
+      selected: false,
+      done: false,
+    }));
+  }
+
+  public onSelectionChange(change: MatSelectionListChange): void {
+    change.source.options.forEach((option, index) => {
+      this.files[index].selected = option.selected;
+    });
   }
 
   public uploadSelected(): void {
-    // TODO: upload all selected files
-    this.uploadFile(this.files[0]);
+    this.files
+      .filter(file => file.selected && !file.done)
+      .forEach(file => {
+        this.uploadFile(file);
+      });
   }
 
-  private async uploadFile(file: File): Promise<void> {
-    const task = this.angularFireStorage.upload(`${UPLOADS_DIR}/${file.name}`, file);
+  private async uploadFile(upload: UploadFile): Promise<void> {
+    const task = this.angularFireStorage.upload(`${UPLOADS_DIR}/${upload.file.name}`, upload.file);
+    task.snapshotChanges().subscribe(snapshot => {
+      if (snapshot.state === 'running') {
+        upload.uploading = true;
+
+        task.percentageChanges().subscribe(progress => {
+          upload.progress = progress;
+        });
+      }
+      if (snapshot.state === 'success') {
+        upload.uploading = false;
+        upload.done = true;
+      }
+    });
   }
 }

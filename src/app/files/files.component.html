@@ -2,9 +2,21 @@
 
 <app-file-upload (filesSelected)="onFilesChanged($event)"></app-file-upload>
 
-<mat-selection-list>
-  <mat-list-option *ngFor="let file of files" checkboxPosition="before">
-    {{ file.name }} ({{ file.size }}) [{{ file.type }}]
+<mat-selection-list (selectionChange)="onSelectionChange($event)">
+  <mat-list-option
+    *ngFor="let upload of files"
+    checkboxPosition="before"
+    [value]="upload"
+    [disabled]="upload.done"
+  >
+    {{ upload.file.name }} ({{ upload.file.size }}) [{{ upload.file.type }}]
+
+    <mat-progress-bar
+      *ngIf="upload.uploading || upload.done"
+      mode="determinate"
+      color="accent"
+      [value]="upload.progress"
+    ></mat-progress-bar>
 
     <mat-icon mat-list-icon>image</mat-icon>
   </mat-list-option>
