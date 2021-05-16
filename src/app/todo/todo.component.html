@@ -1,2 +1,43 @@
 <h1>Todo</h1>
 
+<mat-form-field appearance="outline" color="accent">
+  <mat-label>New task to do</mat-label>
+  <input
+    matInput
+    (keydown.enter)="addTodo($event.target.value); $event.target.value = ''"
+  />
+</mat-form-field>
+
+<mat-list>
+  <mat-divider></mat-divider>
+
+  <ng-container *ngFor="let todo of todos$ | async">
+    <mat-list-item>
+      <div class="item">
+        <div class="left">
+          <span [class.done]="todo.done">{{ todo.task }}</span>
+        </div>
+        <div class="right">
+          <button
+            mat-icon-button
+            (click)="doneTask(todo.id)"
+            [disabled]="todo.done"
+          >
+            <mat-icon>done</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="editTask(todo)"
+            [disabled]="todo.done"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteTask(todo.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </ng-container>
+</mat-list>

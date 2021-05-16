@@ -2,3 +2,15 @@
   display: block;
   padding: 20px;
 }
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.done {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
