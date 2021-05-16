@@ -27,8 +27,6 @@ export class TodoComponent implements OnInit {
       map(email => this.firestore.collection<Todo>(TODOS, ref => ref.where('user', '==', email))),
       switchMap(collection => collection.valueChanges({idField: 'id'})),
     );
-
-    this.todos$.subscribe(console.log);
   }
 
   public addTodo(task: string): void {
