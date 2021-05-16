@@ -2,7 +2,6 @@ import {BreakpointObserver, Breakpoints, MediaMatcher} from '@angular/cdk/layout
 import {Component, OnInit} from '@angular/core';
 import {AngularFireAnalytics} from '@angular/fire/analytics';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {TranslateService} from '@ngx-translate/core';
 import firebase from 'firebase/app';
 import {Observable} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
@@ -22,28 +21,9 @@ export class AppComponent implements OnInit {
     private mediaMatcher: MediaMatcher,
     private angularFireAuth: AngularFireAuth,
     private analytics: AngularFireAnalytics,
-    private translateService: TranslateService,
   ) {}
 
   public ngOnInit() {
-    this.translateService.setTranslation('pl', {
-      home: 'Strona główna',
-      contact: 'Kontakt',
-      colors: 'Kolory',
-      files: 'Pliki',
-      todos: 'Lista zadań',
-    });
-
-    this.translateService.setTranslation('en', {
-      home: 'Home',
-      contact: 'Contact',
-      colors: 'Colors',
-      files: 'Files',
-      todos: 'Todos',
-    });
-
-    this.translateService.use('en');
-
     const breakpoints = [Breakpoints.XSmall, Breakpoints.Small];
     const breakpoints$ = this.beakpointObserver.observe(breakpoints);
     this.smallScreen$ = breakpoints$.pipe(map(state => state.matches));

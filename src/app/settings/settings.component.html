@@ -1,14 +1,27 @@
 <h1>{{ 'settings' | translate }}</h1>
 
 <section>
-  <h2>Theme</h2>
+  <h2>{{ 'theme' | translate }}</h2>
 
   <div>
     <mat-slide-toggle
       [checked]="darkTheme"
       (change)="changeTheme()"
       >
-      Dark Theme
+      {{ 'darkTheme' | translate }}
     </mat-slide-toggle>
   </div>
+</section>
+
+<section>
+  <h2>{{ 'lang' | translate }}</h2>
+
+  <mat-form-field appearance="outline" color="accent">
+    <mat-label>{{ 'selectLangLabel' | translate }}</mat-label>
+    <mat-select (valueChange)="setLanguage($event)" [(ngModel)]="defaultLanguage">
+      <mat-option value="pl">Polski</mat-option>
+      <mat-option value="en">English</mat-option>
+    </mat-select>
+  </mat-form-field>
+
 </section>
