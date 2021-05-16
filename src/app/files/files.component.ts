@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
+import {AngularFirestore} from '@angular/fire/firestore';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {MatSelectionListChange} from '@angular/material/list';
+import {Observable} from 'rxjs';
 import {UploadFile} from './upload-file';
 
 const UPLOADS_DIR = 'app_uploads';
@@ -12,10 +14,13 @@ const UPLOADS_DIR = 'app_uploads';
 })
 export class FilesComponent implements OnInit {
   public files: UploadFile[] = [];
+  public images$: Observable<any[]>
 
-  constructor(private angularFireStorage: AngularFireStorage) {}
+  constructor(private angularFireStorage: AngularFireStorage, private angularFirestore: AngularFirestore) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.images$ = this.angularFirestore.collection('files').valueChanges();
+  }
 
   public onFilesChanged(files: File[]): void {
     this.files = files.map(file => ({
@@ -42,7 +47,8 @@ export class FilesComponent implements OnInit {
   }
 
   private async uploadFile(upload: UploadFile): Promise<void> {
-    const task = this.angularFireStorage.upload(`${UPLOADS_DIR}/${upload.file.name}`, upload.file);
+    const path = `${UPLOADS_DIR}/${upload.file.name}`;
+    const task = this.angularFireStorage.upload(path, upload.file);
     task.snapshotChanges().subscribe(snapshot => {
       if (snapshot.state === 'running') {
         upload.uploading = true;
@@ -54,6 +60,14 @@ export class FilesComponent implements OnInit {
       if (snapshot.state === 'success') {
         upload.uploading = false;
         upload.done = true;
+
+        snapshot.ref.getDownloadURL().then(url => {
+          this.angularFirestore.collection('files').add({
+            url,
+            path,
+            name: upload.file.name,
+          });
+        });
       }
     });
   }
