@@ -1,0 +1,16 @@
+<h2>Rename task</h2>
+
+<form (ngSubmit)="save()">
+  <mat-form-field appearance="outline" color="accent">
+    <mat-label>Task</mat-label>
+    <input
+      matInput
+      [(ngModel)]="todo.task"
+      [ngModelOptions]="{standalone: true}"
+    />
+  </mat-form-field>
+  <div>
+    <button mat-button type="button" (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="accent" type="submit">Save</button>
+  </div>
+</form>

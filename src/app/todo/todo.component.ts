@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 import {Observable} from 'rxjs';
+import {filter} from 'rxjs/operators';
+import {EditTodoComponent} from './edit-todo/edit-todo.component';
 import {Todo} from './todo';
 
 const TODOS = 'todos';
@@ -33,6 +35,19 @@ export class TodoComponent implements OnInit {
   }
 
   public editTask(todo: Todo): void {
+    const config: MatDialogConfig = {
+      position: {
+        top: '100px',
+      },
+      data: todo,
+      disableClose: true,
+    };
+    const dialog: MatDialogRef<EditTodoComponent, Todo> = this.matDialog.open(EditTodoComponent, config);
+    const closed$ = dialog.afterClosed();
+
+    closed$.subscribe(task => {
+      this.getDoc(task.id).set(task);
+    });
   }
 
   public doneTask(id: string): void {
