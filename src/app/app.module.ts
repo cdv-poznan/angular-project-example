@@ -86,7 +86,7 @@ export function FirebaseLoaderFactory(angularFirestore: AngularFirestore): Trans
     AngularFireAnalyticsModule,
     HttpClientModule,
     TranslateModule.forRoot({
-      defaultLanguage: 'pl',
+      defaultLanguage: 'en',
       useDefaultLang: true,
       loader: {
         provide: TranslateLoader,
