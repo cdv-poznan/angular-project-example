@@ -1,9 +1,2 @@
 <h1>Todo</h1>
 
-<button (click)="addTodo()">Add todo</button>
-
-<div>
-  <div *ngFor="let todo of todos$ | async" (click)="deleteTask(todo)">
-    {{ todo.task }}
-  </div>
-</div>
