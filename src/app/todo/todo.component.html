@@ -1,12 +1,19 @@
 <h1>Todo</h1>
 
-<mat-form-field appearance="outline" color="accent">
-  <mat-label>New task to do</mat-label>
-  <input
-    matInput
-    (keydown.enter)="addTodo($event.target.value); $event.target.value = ''"
-  />
-</mat-form-field>
+<div class="new">
+  <mat-form-field appearance="outline" color="accent">
+    <mat-label>New task to do</mat-label>
+    <input
+      matInput
+      (keydown.enter)="addTodo($event.target.value); $event.target.value = ''"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" color="accent">
+    <mat-label>User</mat-label>
+    <input matInput [value]="email$ | async" readonly />
+  </mat-form-field>
+</div>
 
 <mat-list>
   <mat-divider></mat-divider>

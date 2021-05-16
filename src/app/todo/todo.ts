@@ -3,4 +3,5 @@ export interface Todo {
   task: string;
   done: boolean;
   created: number;
+  user: string;
 }

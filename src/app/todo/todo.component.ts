@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
+import {AngularFireAuth} from '@angular/fire/auth';
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, CollectionReference} from '@angular/fire/firestore';
 import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
+import firebase from 'firebase/app';
 import {Observable} from 'rxjs';
-import {filter} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 import {EditTodoComponent} from './edit-todo/edit-todo.component';
 import {Todo} from './todo';
 
@@ -14,23 +16,28 @@ const TODOS = 'todos';
   styleUrls: ['./todo.component.scss'],
 })
 export class TodoComponent implements OnInit {
+  public email$: Observable<string>;
   public todos$: Observable<Todo[]>;
 
-  constructor(private firestore: AngularFirestore, private matDialog: MatDialog) {}
+  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth, private matDialog: MatDialog) {}
 
   ngOnInit(): void {
-    const collection: AngularFirestoreCollection<Todo> = this.firestore.collection<Todo>(TODOS);
+    this.email$ = this.auth.user.pipe(map(user => user?.email ?? ''));
 
-    this.todos$ = collection.valueChanges({idField: 'id'});
-
-    this.todos$.subscribe(console.log);
+    this.todos$ = this.email$.pipe(
+      map(email => this.firestore.collection<Todo>(TODOS, ref => ref.where('user', '==', email))),
+      switchMap(collection => collection.valueChanges({idField: 'id'})),
+    );
   }
 
   public addTodo(task: string): void {
-    this.firestore.collection<Omit<Todo, 'id'>>(TODOS).add({
-      task,
-      done: false,
-      created: Date.now(),
+    this.email$.subscribe(user => {
+      this.firestore.collection<Omit<Todo, 'id'>>(TODOS).add({
+        task,
+        user,
+        done: false,
+        created: Date.now(),
+      });
     });
   }
 

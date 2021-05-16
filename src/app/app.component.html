@@ -84,7 +84,7 @@
       <ng-template #large>
         <ng-container *ngIf="user$ | async as user; else login">
           <button mat-button color="primary" (click)="signOut()">
-            <span>Log out user {{ user.displayName }}</span>
+            <span>Log out user {{ user.email }}</span>
             <mat-icon>logout</mat-icon>
           </button>
         </ng-container>
